@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+# Install pngquant using Homebrew
+which pngquant 2&>1 > /dev/null
+[ $? -ne 0 ] && brew install pngquant
+
+# Quantize 32-bit RGBA PNG to 8-bit (or smaller) RGBA-palette
+# pngquant [number of colors] [options] input.png
+#   --skip-if-larger  only save converted file if they're smaller than original
+#   --strip           remove optional metadata
+#   --ext=.png        set output filename to be same as input filename
+#   --force           overwrite existing output files
+input="$1"
+compression="$2"
+
+if [ -z $compression ]; then
+  compression=128
+fi
+
+
+pngquant $compression --skip-if-larger --strip --ext=.png --force "$input"
